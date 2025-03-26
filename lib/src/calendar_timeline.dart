@@ -16,6 +16,9 @@ typedef OnDateSelected = void Function(DateTime);
 class CalendarTimeline extends StatefulWidget {
   CalendarTimeline({
     Key? key,
+    this.yearHeight,
+    required this.monthHeight,
+    required this.dayHeight,
     required this.initialDate,
     required this.firstDate,
     required this.lastDate,
@@ -40,6 +43,7 @@ class CalendarTimeline extends StatefulWidget {
     this.locale,
     this.showYears = false,
     this.eventDates,
+
   })  : assert(
           initialDate.difference(firstDate).inDays >= 0,
           'initialDate must be on or after firstDate',
@@ -84,6 +88,11 @@ class CalendarTimeline extends StatefulWidget {
   final bool shrink;
   final String? locale;
   final List<DateTime>? eventDates;
+  final double? yearHeight;
+  final double monthHeight;
+  final double dayHeight;
+
+
 
   /// If true, it will show a separate row for the years.
   /// It defaults to false
@@ -353,7 +362,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   Widget _buildYearList() {
     return SizedBox(
       key: const Key('ScrollableYearList'),
-      height: 40,
+      height: widget.yearHeight??40,
       child: ScrollablePositionedList.builder(
         initialScrollIndex: _yearSelectedIndex ?? 0,
         initialAlignment: _scrollAlignment,
@@ -374,7 +383,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                 YearItem(
                   isSelected: _yearSelectedIndex == index,
                   name: yearName,
-                  onTap: () => _onSelectYear(index),
+                  onTap: () =>  _onSelectYear(index),
                   color: widget.monthColor,
                   small: false,
                   shrink: widget.shrink,
@@ -399,7 +408,7 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   /// months in the calendar and the small version of [YearItem] for each year in between
   Widget _buildMonthList() {
     return SizedBox(
-      height: 30,
+      height: widget.monthHeight,
       child: ScrollablePositionedList.builder(
         initialScrollIndex: _monthSelectedIndex ?? 0,
         initialAlignment: _scrollAlignment,

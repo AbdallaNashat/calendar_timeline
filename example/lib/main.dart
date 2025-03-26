@@ -82,6 +82,8 @@ class _HomePageState extends State<HomePage> {
               dotColor: Colors.white,
               selectableDayPredicate: (date) => date.day != 23,
               locale: 'en',
+              monthHeight: 40,
+              dayHeight: 40,
             ),
             const SizedBox(height: 20),
             Padding(
